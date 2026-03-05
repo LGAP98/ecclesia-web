@@ -162,10 +162,18 @@ header .subtitle {
   border: 1px solid var(--color-border);
   border-radius: 12px;
   padding: 2rem 2.5rem;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.about-logo {
+  width: 180px;
+  flex-shrink: 0;
 }
 
 .about-text {
-  text-align: center;
+  text-align: left;
 }
 
 .about-text h2 {
@@ -336,6 +344,14 @@ header .subtitle {
   cursor: default;
 }
 
+.page-ellipsis {
+  display: flex;
+  align-items: center;
+  padding: 0 0.3rem;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
 /* ---- Support / Podporte nas ---- */
 
 .support {
@@ -481,6 +497,16 @@ footer a:hover { text-decoration: underline; }
 
   .about-content {
     padding: 1.5rem;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about-logo {
+    width: 120px;
+  }
+
+  .about-text {
+    text-align: center;
   }
 
   .support-content {

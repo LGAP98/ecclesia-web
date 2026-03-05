@@ -178,9 +178,23 @@ function renderPage() {
   if (totalPages > 1) {
     const buttons = [];
     buttons.push(`<button class="page-btn" ${currentPage === 1 ? 'disabled' : ''} data-page="${currentPage - 1}">&laquo;</button>`);
-    for (let i = 1; i <= totalPages; i++) {
-      buttons.push(`<button class="page-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`);
+
+    const pages = new Set();
+    pages.add(1);
+    pages.add(totalPages);
+    for (let i = Math.max(1, currentPage - 1); i <= Math.min(totalPages, currentPage + 1); i++) {
+      pages.add(i);
     }
+    const sorted = [...pages].sort((a, b) => a - b);
+    let prev = 0;
+    for (const p of sorted) {
+      if (p - prev > 1) {
+        buttons.push(`<span class="page-ellipsis">&hellip;</span>`);
+      }
+      buttons.push(`<button class="page-btn ${p === currentPage ? 'active' : ''}" data-page="${p}">${p}</button>`);
+      prev = p;
+    }
+
     buttons.push(`<button class="page-btn" ${currentPage === totalPages ? 'disabled' : ''} data-page="${currentPage + 1}">&raquo;</button>`);
     paginationHtml = `<nav class="pagination">${buttons.join('')}</nav>`;
   }
