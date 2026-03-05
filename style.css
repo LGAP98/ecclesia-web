@@ -31,16 +31,59 @@ body {
 /* ---- Header ---- */
 
 header {
+  position: relative;
   text-align: center;
-  padding: 3rem 1.5rem 2.5rem;
-  background: linear-gradient(135deg, #1e2a3a 0%, #2a3f55 50%, #34506a 100%);
   color: #fff;
+  overflow: hidden;
+  min-height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-slideshow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.2s ease-in-out;
+}
+
+.hero-slide.active {
+  opacity: 1;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(30, 42, 58, 0.7) 0%,
+    rgba(30, 42, 58, 0.5) 50%,
+    rgba(30, 42, 58, 0.75) 100%
+  );
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 3rem 1.5rem 2.5rem;
 }
 
 .header-logo {
-  height: 80px;
+  height: 90px;
   width: auto;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
+  filter: brightness(0) invert(1);
 }
 
 header h1 {
@@ -52,11 +95,12 @@ header h1 {
 }
 
 header .subtitle {
-  font-size: 1.1rem;
-  opacity: 0.8;
+  font-size: 1.15rem;
+  opacity: 0.9;
   font-weight: 300;
   max-width: 600px;
   margin: 0 auto 1.5rem;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.3);
 }
 
 .podcast-meta {
@@ -75,13 +119,15 @@ header .subtitle {
   text-decoration: none;
   font-size: 0.9rem;
   opacity: 0.85;
-  transition: opacity 0.2s;
+  transition: opacity 0.2s, background 0.2s;
   padding: 0.4rem 1rem;
-  border: 1px solid rgba(255,255,255,0.3);
+  border: 1px solid rgba(255,255,255,0.4);
   border-radius: 2rem;
+  backdrop-filter: blur(4px);
+  background: rgba(255,255,255,0.08);
 }
 
-.podcast-meta a:hover { opacity: 1; background: rgba(255,255,255,0.1); }
+.podcast-meta a:hover { opacity: 1; background: rgba(255,255,255,0.2); }
 
 .podcast-meta a.cta-button {
   background: var(--color-accent-warm);
@@ -390,7 +436,8 @@ footer a:hover { text-decoration: underline; }
 
 @media (max-width: 640px) {
   .header-logo { height: 60px; }
-  header { padding: 2.5rem 1rem 2rem; }
+  header { min-height: 380px; }
+  .hero-content { padding: 2.5rem 1rem 2rem; }
 
   .about-content {
     flex-direction: column;
