@@ -115,15 +115,29 @@ function renderPodcastMeta(podcast) {
   }
 }
 
+const EPISODES_PER_PAGE = 5;
+let allEpisodes = [];
+let currentPage = 1;
+
 function renderEpisodes(episodes) {
+  allEpisodes = episodes;
+  currentPage = 1;
+  renderPage();
+}
+
+function renderPage() {
   const container = document.getElementById('episodes-list');
 
-  if (episodes.length === 0) {
+  if (allEpisodes.length === 0) {
     container.innerHTML = '<p class="loading">Zatím nejsou k dispozici žádné epizody.</p>';
     return;
   }
 
-  container.innerHTML = episodes.map(ep => `
+  const totalPages = Math.ceil(allEpisodes.length / EPISODES_PER_PAGE);
+  const start = (currentPage - 1) * EPISODES_PER_PAGE;
+  const pageEpisodes = allEpisodes.slice(start, start + EPISODES_PER_PAGE);
+
+  const episodesHtml = pageEpisodes.map(ep => `
     <article class="episode">
       <div class="episode-date">${formatDate(ep.pubDate)}</div>
       <h3><a href="${ep.link}" target="_blank" rel="noopener">${ep.title}</a></h3>
@@ -137,6 +151,30 @@ function renderEpisodes(episodes) {
       ${ep.duration ? `<p class="episode-duration">${ep.duration}</p>` : ''}
     </article>
   `).join('');
+
+  let paginationHtml = '';
+  if (totalPages > 1) {
+    const buttons = [];
+    buttons.push(`<button class="page-btn" ${currentPage === 1 ? 'disabled' : ''} data-page="${currentPage - 1}">&laquo;</button>`);
+    for (let i = 1; i <= totalPages; i++) {
+      buttons.push(`<button class="page-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`);
+    }
+    buttons.push(`<button class="page-btn" ${currentPage === totalPages ? 'disabled' : ''} data-page="${currentPage + 1}">&raquo;</button>`);
+    paginationHtml = `<nav class="pagination">${buttons.join('')}</nav>`;
+  }
+
+  container.innerHTML = episodesHtml + paginationHtml;
+
+  container.querySelectorAll('.page-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const page = parseInt(btn.dataset.page, 10);
+      if (page >= 1 && page <= totalPages) {
+        currentPage = page;
+        renderPage();
+        document.getElementById('episodes').scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
 }
 
 function renderError() {
