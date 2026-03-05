@@ -1,0 +1,383 @@
+/* ========================================
+   Ecclesia Podcast – style.css
+   ======================================== */
+
+:root {
+  --color-bg: #faf9f6;
+  --color-surface: #ffffff;
+  --color-text: #1a1a2e;
+  --color-text-muted: #555;
+  --color-accent: #6b4c9a;
+  --color-accent-light: #8b6fba;
+  --color-border: #e8e4df;
+  --color-warm: #f5f0eb;
+  --font-serif: 'Georgia', 'Times New Roman', serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --max-width: 860px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Header ---- */
+
+header {
+  text-align: center;
+  padding: 4rem 1.5rem 3rem;
+  background: linear-gradient(135deg, #1a1a2e 0%, #2d2b55 50%, #3b2667 100%);
+  color: #fff;
+}
+
+header h1 {
+  font-family: var(--font-serif);
+  font-size: 3rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+}
+
+header .subtitle {
+  font-size: 1.1rem;
+  opacity: 0.8;
+  font-weight: 300;
+  max-width: 600px;
+  margin: 0 auto 1.5rem;
+}
+
+.podcast-meta {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+.podcast-meta a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+  padding: 0.4rem 1rem;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 2rem;
+}
+
+.podcast-meta a:hover { opacity: 1; background: rgba(255,255,255,0.1); }
+
+/* ---- Section shared ---- */
+
+.section-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.section-inner h2 {
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: var(--color-text);
+}
+
+/* ---- About ---- */
+
+.about-content {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 2rem 2.5rem;
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.about-content img {
+  width: 180px;
+  height: 180px;
+  border-radius: 12px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.about-text h2 {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--color-accent);
+}
+
+.about-text p {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 0.6rem;
+}
+
+.about-text p:last-child { margin-bottom: 0; }
+
+/* ---- Hosts ---- */
+
+.hosts {
+  background: var(--color-warm);
+}
+
+.hosts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.host-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.host-card img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+  border: 3px solid var(--color-accent-light);
+}
+
+.host-card h3 {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
+}
+
+.host-card p {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+/* ---- Episodes ---- */
+
+.episodes {
+  padding-bottom: 2rem;
+}
+
+.episode {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  margin-bottom: 1rem;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.episode:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  border-color: var(--color-accent-light);
+}
+
+.episode-date {
+  font-size: 0.8rem;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.3rem;
+}
+
+.episode h3 {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.episode h3 a {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.episode h3 a:hover { color: var(--color-accent); }
+
+.episode-description {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.episode audio {
+  width: 100%;
+  height: 40px;
+  border-radius: 8px;
+}
+
+.episode-duration {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-top: 0.5rem;
+}
+
+/* ---- Support / Podporte nas ---- */
+
+.support {
+  background: linear-gradient(135deg, #2d2b55 0%, #3b2667 100%);
+  color: #fff;
+}
+
+.support .section-inner h2 {
+  color: #fff;
+}
+
+.support-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.support-text p {
+  opacity: 0.9;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.support-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.support-option {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+}
+
+.support-option h3 {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.support-option p {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+.support-option .account-number {
+  font-family: monospace;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  background: rgba(255,255,255,0.15);
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  display: inline-block;
+  margin-top: 0.4rem;
+}
+
+.support-cta {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 0.75rem 2rem;
+  background: #fff;
+  color: var(--color-accent);
+  text-decoration: none;
+  border-radius: 2rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.support-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* ---- Loading & error ---- */
+
+.loading {
+  text-align: center;
+  padding: 3rem;
+  color: var(--color-text-muted);
+}
+
+.loading-spinner {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.error {
+  text-align: center;
+  padding: 2rem;
+  color: #c0392b;
+  background: #fdf2f2;
+  border-radius: 12px;
+  border: 1px solid #f5c6cb;
+}
+
+.error a { color: var(--color-accent); }
+
+/* ---- Footer ---- */
+
+footer {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
+footer a { color: var(--color-accent); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+/* ---- Responsive ---- */
+
+@media (max-width: 640px) {
+  header h1 { font-size: 2.2rem; }
+  header { padding: 3rem 1rem 2rem; }
+
+  .about-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1.5rem;
+  }
+
+  .about-content img { width: 120px; height: 120px; }
+
+  .support-content {
+    grid-template-columns: 1fr;
+  }
+
+  .episode { padding: 1.2rem 1.5rem; }
+
+  .hosts-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 400px) {
+  .hosts-grid {
+    grid-template-columns: 1fr;
+  }
+}
