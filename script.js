@@ -66,7 +66,7 @@ async function fetchFeed() {
       if (text.includes('<rss') || text.includes('<channel')) return text;
     } catch { /* try next proxy */ }
   }
-  throw new Error('Nelze nacist RSS feed');
+  throw new Error('Nelze načíst RSS feed');
 }
 
 function parseFeed(xml) {
@@ -119,7 +119,7 @@ function renderEpisodes(episodes) {
   const container = document.getElementById('episodes-list');
 
   if (episodes.length === 0) {
-    container.innerHTML = '<p class="loading">Zatim nejsou k dispozici zadne epizody.</p>';
+    container.innerHTML = '<p class="loading">Zatím nejsou k dispozici žádné epizody.</p>';
     return;
   }
 
@@ -131,7 +131,7 @@ function renderEpisodes(episodes) {
       ${ep.audioUrl ? `
         <audio controls preload="none">
           <source src="${ep.audioUrl}" type="${ep.audioType}">
-          Vas prohlizec nepodporuje prehravani audia.
+          Váš prohlížeč nepodporuje přehrávání audia.
         </audio>
       ` : ''}
       ${ep.duration ? `<p class="episode-duration">${ep.duration}</p>` : ''}
@@ -142,9 +142,9 @@ function renderEpisodes(episodes) {
 function renderError() {
   document.getElementById('episodes-list').innerHTML = `
     <div class="error">
-      <p><strong>Omlouvame se,</strong> nepodarilo se nacist epizody.</p>
+      <p><strong>Omlouváme se,</strong> nepodařilo se načíst epizody.</p>
       <p style="margin-top:0.5rem;font-size:0.85rem;">
-        Poslouchejte primo na
+        Poslouchejte přímo na
         <a href="https://ecclesiapodcast.podbean.com/" target="_blank" rel="noopener">Podbean</a>.
       </p>
     </div>
