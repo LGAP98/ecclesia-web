@@ -66,7 +66,7 @@ async function fetchFeed() {
       if (text.includes('<rss') || text.includes('<channel')) return text;
     } catch { /* try next proxy */ }
   }
-  throw new Error('Nelze nacist RSS feed');
+  throw new Error('Nelze načíst RSS feed');
 }
 
 function parseFeed(xml) {
@@ -115,15 +115,29 @@ function renderPodcastMeta(podcast) {
   }
 }
 
+const EPISODES_PER_PAGE = 5;
+let allEpisodes = [];
+let currentPage = 1;
+
 function renderEpisodes(episodes) {
+  allEpisodes = episodes;
+  currentPage = 1;
+  renderPage();
+}
+
+function renderPage() {
   const container = document.getElementById('episodes-list');
 
-  if (episodes.length === 0) {
-    container.innerHTML = '<p class="loading">Zatim nejsou k dispozici zadne epizody.</p>';
+  if (allEpisodes.length === 0) {
+    container.innerHTML = '<p class="loading">Zatím nejsou k dispozici žádné epizody.</p>';
     return;
   }
 
-  container.innerHTML = episodes.map(ep => `
+  const totalPages = Math.ceil(allEpisodes.length / EPISODES_PER_PAGE);
+  const start = (currentPage - 1) * EPISODES_PER_PAGE;
+  const pageEpisodes = allEpisodes.slice(start, start + EPISODES_PER_PAGE);
+
+  const episodesHtml = pageEpisodes.map(ep => `
     <article class="episode">
       <div class="episode-date">${formatDate(ep.pubDate)}</div>
       <h3><a href="${ep.link}" target="_blank" rel="noopener">${ep.title}</a></h3>
@@ -131,20 +145,44 @@ function renderEpisodes(episodes) {
       ${ep.audioUrl ? `
         <audio controls preload="none">
           <source src="${ep.audioUrl}" type="${ep.audioType}">
-          Vas prohlizec nepodporuje prehravani audia.
+          Váš prohlížeč nepodporuje přehrávání audia.
         </audio>
       ` : ''}
       ${ep.duration ? `<p class="episode-duration">${ep.duration}</p>` : ''}
     </article>
   `).join('');
+
+  let paginationHtml = '';
+  if (totalPages > 1) {
+    const buttons = [];
+    buttons.push(`<button class="page-btn" ${currentPage === 1 ? 'disabled' : ''} data-page="${currentPage - 1}">&laquo;</button>`);
+    for (let i = 1; i <= totalPages; i++) {
+      buttons.push(`<button class="page-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`);
+    }
+    buttons.push(`<button class="page-btn" ${currentPage === totalPages ? 'disabled' : ''} data-page="${currentPage + 1}">&raquo;</button>`);
+    paginationHtml = `<nav class="pagination">${buttons.join('')}</nav>`;
+  }
+
+  container.innerHTML = episodesHtml + paginationHtml;
+
+  container.querySelectorAll('.page-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const page = parseInt(btn.dataset.page, 10);
+      if (page >= 1 && page <= totalPages) {
+        currentPage = page;
+        renderPage();
+        document.getElementById('episodes').scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
 }
 
 function renderError() {
   document.getElementById('episodes-list').innerHTML = `
     <div class="error">
-      <p><strong>Omlouvame se,</strong> nepodarilo se nacist epizody.</p>
+      <p><strong>Omlouváme se,</strong> nepodařilo se načíst epizody.</p>
       <p style="margin-top:0.5rem;font-size:0.85rem;">
-        Poslouchejte primo na
+        Poslouchejte přímo na
         <a href="https://ecclesiapodcast.podbean.com/" target="_blank" rel="noopener">Podbean</a>.
       </p>
     </div>

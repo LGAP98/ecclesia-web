@@ -53,6 +53,7 @@ header {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 30%;
   opacity: 0;
   transition: opacity 1.2s ease-in-out;
 }
@@ -300,6 +301,44 @@ header .subtitle {
   font-size: 0.8rem;
   color: var(--color-text-muted);
   margin-top: 0.5rem;
+}
+
+/* ---- Pagination ---- */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 1.5rem;
+}
+
+.page-btn {
+  min-width: 2.2rem;
+  height: 2.2rem;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.page-btn:hover:not(:disabled) {
+  border-color: var(--color-accent);
+  background: var(--color-warm);
+}
+
+.page-btn.active {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+  font-weight: 600;
+}
+
+.page-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
 }
 
 /* ---- Support / Podporte nas ---- */
