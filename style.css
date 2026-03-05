@@ -88,11 +88,8 @@ header {
 }
 
 header h1 {
-  font-family: var(--font-serif);
-  font-size: 3rem;
-  font-weight: 400;
-  letter-spacing: 0.08em;
-  margin-bottom: 0.5rem;
+  margin: 0;
+  line-height: 1;
 }
 
 header .subtitle {
@@ -155,6 +152,7 @@ header .subtitle {
   font-size: 1.8rem;
   margin-bottom: 1.5rem;
   color: var(--color-text);
+  text-align: center;
 }
 
 /* ---- About ---- */
@@ -164,17 +162,10 @@ header .subtitle {
   border: 1px solid var(--color-border);
   border-radius: 12px;
   padding: 2rem 2.5rem;
-  display: flex;
-  gap: 2rem;
-  align-items: flex-start;
 }
 
-.about-content img {
-  width: 180px;
-  height: 180px;
-  border-radius: 12px;
-  object-fit: cover;
-  flex-shrink: 0;
+.about-text {
+  text-align: center;
 }
 
 .about-text h2 {
@@ -202,16 +193,20 @@ header .subtitle {
   color: var(--color-text-muted);
   font-size: 0.95rem;
   max-width: 680px;
-  margin-bottom: 2rem;
+  margin: 0 auto 2rem;
+  text-align: center;
 }
 
 .hosts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1.5rem;
 }
 
 .host-card {
+  flex: 0 1 calc(33.333% - 1rem);
+  min-width: 220px;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 12px;
@@ -434,6 +429,12 @@ header .subtitle {
   color: var(--color-text-muted);
 }
 
+.loading-hint {
+  font-size: 0.85rem;
+  opacity: 0.6;
+  margin-top: 0.3rem;
+}
+
 .loading-spinner {
   display: inline-block;
   width: 32px;
@@ -479,13 +480,8 @@ footer a:hover { text-decoration: underline; }
   .hero-content { padding: 2.5rem 1rem 2rem; }
 
   .about-content {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
     padding: 1.5rem;
   }
-
-  .about-content img { width: 120px; height: 120px; }
 
   .support-content {
     grid-template-columns: 1fr;
@@ -493,13 +489,13 @@ footer a:hover { text-decoration: underline; }
 
   .episode { padding: 1.2rem 1.5rem; }
 
-  .hosts-grid {
-    grid-template-columns: 1fr 1fr;
+  .host-card {
+    flex: 0 1 calc(50% - 1rem);
   }
 }
 
 @media (max-width: 400px) {
-  .hosts-grid {
-    grid-template-columns: 1fr;
+  .host-card {
+    flex: 1 1 100%;
   }
 }

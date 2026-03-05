@@ -57,13 +57,38 @@ function parseDurationToSeconds(duration) {
   return parseInt(duration, 10) || 0;
 }
 
+const CACHE_KEY = 'ecclesia_feed_cache';
+const CACHE_TTL = 30 * 60 * 1000; // 30 minutes
+
+function getCachedFeed() {
+  try {
+    const raw = localStorage.getItem(CACHE_KEY);
+    if (!raw) return null;
+    const { timestamp, data } = JSON.parse(raw);
+    if (Date.now() - timestamp < CACHE_TTL) return data;
+  } catch { /* ignore corrupt cache */ }
+  return null;
+}
+
+function setCachedFeed(data) {
+  try {
+    localStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: Date.now(), data }));
+  } catch { /* storage full or unavailable */ }
+}
+
 async function fetchFeed() {
+  const cached = getCachedFeed();
+  if (cached) return cached;
+
   for (const proxy of CORS_PROXIES) {
     try {
       const res = await fetch(proxy(FEED_URL));
       if (!res.ok) continue;
       const text = await res.text();
-      if (text.includes('<rss') || text.includes('<channel')) return text;
+      if (text.includes('<rss') || text.includes('<channel')) {
+        setCachedFeed(text);
+        return text;
+      }
     } catch { /* try next proxy */ }
   }
   throw new Error('Nelze načíst RSS feed');
@@ -108,11 +133,8 @@ function parseFeed(xml) {
   return { podcast, episodes };
 }
 
-function renderPodcastMeta(podcast) {
-  const coverEl = document.getElementById('podcast-cover');
-  if (podcast.image && coverEl) {
-    coverEl.src = podcast.image;
-  }
+function renderPodcastMeta() {
+  // podcast cover removed – no meta rendering needed
 }
 
 const EPISODES_PER_PAGE = 5;
@@ -180,9 +202,7 @@ function renderPage() {
 function renderError() {
   document.getElementById('episodes-list').innerHTML = `
     <div class="error">
-      <p><strong>Omlouváme se,</strong> nepodařilo se načíst epizody.</p>
-      <p style="margin-top:0.5rem;font-size:0.85rem;">
-        Poslouchejte přímo na
+      <p>Epizody se momentálně nepodařilo načíst. Mezitím nás můžete poslouchat přímo na
         <a href="https://ecclesiapodcast.podbean.com/" target="_blank" rel="noopener">Podbean</a>.
       </p>
     </div>
@@ -193,7 +213,7 @@ async function init() {
   try {
     const xml = await fetchFeed();
     const { podcast, episodes } = parseFeed(xml);
-    renderPodcastMeta(podcast);
+    renderPodcastMeta();
     renderEpisodes(episodes);
   } catch (err) {
     console.error('Feed error:', err);
