@@ -137,66 +137,66 @@ function renderPodcastMeta() {
   // podcast cover removed – no meta rendering needed
 }
 
-const EPISODES_BATCH = 5;
+const EPISODES_PER_PAGE = 5;
 let allEpisodes = [];
-let visibleCount = 0;
+let currentPage = 1;
 
 function renderEpisodes(episodes) {
   allEpisodes = episodes;
-  visibleCount = 0;
+  currentPage = 1;
+  renderPage();
+}
+
+function renderPage() {
   const container = document.getElementById('episodes-list');
-  container.innerHTML = '';
 
   if (allEpisodes.length === 0) {
     container.innerHTML = '<p class="loading">Zatím nejsou k dispozici žádné epizody.</p>';
     return;
   }
 
-  loadMore();
-}
+  const totalPages = Math.ceil(allEpisodes.length / EPISODES_PER_PAGE);
+  const start = (currentPage - 1) * EPISODES_PER_PAGE;
+  const pageEpisodes = allEpisodes.slice(start, start + EPISODES_PER_PAGE);
 
-function createEpisodeEl(ep) {
-  const article = document.createElement('article');
-  article.className = 'episode';
-  article.innerHTML = `
-    <div class="episode-date">${formatDate(ep.pubDate)}</div>
-    <h3><a href="${ep.link}" target="_blank" rel="noopener">${ep.title}</a></h3>
-    <p class="episode-description">${stripHtml(ep.description)}</p>
-    ${ep.duration ? `<p class="episode-duration">${ep.duration}</p>` : ''}
-  `;
+  const episodesHtml = pageEpisodes.map(ep => `
+    <article class="episode">
+      <div class="episode-date">${formatDate(ep.pubDate)}</div>
+      <h3><a href="${ep.link}" target="_blank" rel="noopener">${ep.title}</a></h3>
+      <p class="episode-description">${stripHtml(ep.description)}</p>
+      ${ep.audioUrl ? `
+        <audio controls preload="none">
+          <source src="${ep.audioUrl}" type="${ep.audioType}">
+          Váš prohlížeč nepodporuje přehrávání audia.
+        </audio>
+      ` : ''}
+      ${ep.duration ? `<p class="episode-duration">${ep.duration}</p>` : ''}
+    </article>
+  `).join('');
 
-  if (ep.audioUrl) {
-    const audio = document.createElement('audio');
-    audio.controls = true;
-    audio.preload = 'none';
-    const source = document.createElement('source');
-    source.src = ep.audioUrl;
-    source.type = ep.audioType;
-    audio.appendChild(source);
-    article.insertBefore(audio, article.querySelector('.episode-duration'));
+  let paginationHtml = '';
+  if (totalPages > 1) {
+    const buttons = [];
+    buttons.push(`<button class="page-btn" ${currentPage === 1 ? 'disabled' : ''} data-page="${currentPage - 1}">&laquo;</button>`);
+    for (let i = 1; i <= totalPages; i++) {
+      buttons.push(`<button class="page-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`);
+    }
+    buttons.push(`<button class="page-btn" ${currentPage === totalPages ? 'disabled' : ''} data-page="${currentPage + 1}">&raquo;</button>`);
+    paginationHtml = `<nav class="pagination">${buttons.join('')}</nav>`;
   }
 
-  return article;
-}
+  container.innerHTML = episodesHtml + paginationHtml;
 
-function loadMore() {
-  const container = document.getElementById('episodes-list');
-  const oldBtn = container.querySelector('.load-more-btn');
-  if (oldBtn) oldBtn.remove();
-
-  const end = Math.min(visibleCount + EPISODES_BATCH, allEpisodes.length);
-  for (let i = visibleCount; i < end; i++) {
-    container.appendChild(createEpisodeEl(allEpisodes[i]));
-  }
-  visibleCount = end;
-
-  if (visibleCount < allEpisodes.length) {
-    const btn = document.createElement('button');
-    btn.className = 'load-more-btn';
-    btn.textContent = `Načíst další epizody (${allEpisodes.length - visibleCount} zbývá)`;
-    btn.addEventListener('click', loadMore);
-    container.appendChild(btn);
-  }
+  container.querySelectorAll('.page-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const page = parseInt(btn.dataset.page, 10);
+      if (page >= 1 && page <= totalPages) {
+        currentPage = page;
+        renderPage();
+        document.getElementById('episodes').scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
 }
 
 function renderError() {
