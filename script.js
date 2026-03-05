@@ -202,9 +202,7 @@ function renderPage() {
 function renderError() {
   document.getElementById('episodes-list').innerHTML = `
     <div class="error">
-      <p>Nepodařilo se načíst epizody. Zkuste to prosím později.</p>
-      <p style="margin-top:0.5rem;font-size:0.85rem;">
-        Poslouchejte přímo na
+      <p>Epizody se momentálně nepodařilo načíst. Mezitím nás můžete poslouchat přímo na
         <a href="https://ecclesiapodcast.podbean.com/" target="_blank" rel="noopener">Podbean</a>.
       </p>
     </div>
