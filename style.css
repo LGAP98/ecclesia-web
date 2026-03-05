@@ -301,20 +301,14 @@ header .subtitle {
   margin-top: 0.5rem;
 }
 
-/* ---- Pagination ---- */
+/* ---- Load more ---- */
 
-.pagination {
-  display: flex;
-  justify-content: center;
-  gap: 0.4rem;
-  margin-top: 1.5rem;
-}
-
-.page-btn {
-  min-width: 2.2rem;
-  height: 2.2rem;
+.load-more-btn {
+  display: block;
+  margin: 1.5rem auto 0;
+  padding: 0.6rem 2rem;
   border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border-radius: 2rem;
   background: var(--color-surface);
   color: var(--color-text);
   font-size: 0.9rem;
@@ -322,21 +316,9 @@ header .subtitle {
   transition: background 0.2s, border-color 0.2s;
 }
 
-.page-btn:hover:not(:disabled) {
+.load-more-btn:hover {
   border-color: var(--color-accent);
   background: var(--color-warm);
-}
-
-.page-btn.active {
-  background: var(--color-accent);
-  border-color: var(--color-accent);
-  color: #fff;
-  font-weight: 600;
-}
-
-.page-btn:disabled {
-  opacity: 0.35;
-  cursor: default;
 }
 
 /* ---- Support / Podporte nas ---- */
