@@ -164,15 +164,26 @@ header .subtitle {
   padding: 2rem 2.5rem;
 }
 
-.about-text {
-  text-align: center;
-}
-
-.about-text h2 {
+.about-content h2 {
   font-family: var(--font-serif);
   font-size: 1.5rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
   color: var(--color-accent);
+}
+
+.about-body {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.about-logo {
+  width: 180px;
+  flex-shrink: 0;
+}
+
+.about-text {
+  text-align: left;
 }
 
 .about-text p {
@@ -336,6 +347,14 @@ header .subtitle {
   cursor: default;
 }
 
+.page-ellipsis {
+  display: flex;
+  align-items: center;
+  padding: 0 0.3rem;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
 /* ---- Support / Podporte nas ---- */
 
 .support {
@@ -481,6 +500,19 @@ footer a:hover { text-decoration: underline; }
 
   .about-content {
     padding: 1.5rem;
+    text-align: center;
+  }
+
+  .about-body {
+    flex-direction: column;
+  }
+
+  .about-logo {
+    width: 120px;
+  }
+
+  .about-text {
+    text-align: center;
   }
 
   .support-content {
