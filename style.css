@@ -189,6 +189,12 @@ header .subtitle {
   margin-bottom: 0.6rem;
 }
 
+.about-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
 .about-text p:last-child { margin-bottom: 0; }
 
 /* ---- Hosts ---- */
@@ -507,6 +513,10 @@ footer a:hover { text-decoration: underline; }
 
   .about-text {
     text-align: center;
+  }
+
+  .about-columns {
+    grid-template-columns: 1fr;
   }
 
   .support-content {
