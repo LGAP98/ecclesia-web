@@ -83,6 +83,18 @@ header .subtitle {
 
 .podcast-meta a:hover { opacity: 1; background: rgba(255,255,255,0.1); }
 
+.podcast-meta a.cta-button {
+  background: var(--color-accent-warm);
+  border-color: var(--color-accent-warm);
+  opacity: 1;
+  font-weight: 600;
+}
+
+.podcast-meta a.cta-button:hover {
+  background: #c9491f;
+  border-color: #c9491f;
+}
+
 /* ---- Section shared ---- */
 
 .section-inner {
@@ -137,6 +149,13 @@ header .subtitle {
 
 .hosts {
   background: var(--color-warm);
+}
+
+.hosts-intro {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  max-width: 680px;
+  margin-bottom: 2rem;
 }
 
 .hosts-grid {
@@ -258,6 +277,15 @@ header .subtitle {
   opacity: 0.9;
   font-size: 0.95rem;
   margin-bottom: 1rem;
+}
+
+.support-text .support-highlight {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-style: italic;
+  opacity: 1;
+  color: var(--color-accent-light);
+  margin: 1.2rem 0;
 }
 
 .support-options {
