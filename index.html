@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ecclesia Podcast</title>
+  <meta name="description" content="Ecclesia Podcast - rozhovory o vire, cirkvi a spolecnosti. Poslouchejte nejnovejsi epizody.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#9769;</text></svg>">
+  <style>
+    :root {
+      --color-bg: #faf9f6;
+      --color-surface: #ffffff;
+      --color-text: #1a1a2e;
+      --color-text-muted: #555;
+      --color-accent: #6b4c9a;
+      --color-accent-light: #8b6fba;
+      --color-border: #e8e4df;
+      --font-serif: 'Georgia', 'Times New Roman', serif;
+      --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --max-width: 860px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header {
+      text-align: center;
+      padding: 4rem 1.5rem 3rem;
+      background: linear-gradient(135deg, #1a1a2e 0%, #2d2b55 50%, #3b2667 100%);
+      color: #fff;
+    }
+
+    header h1 {
+      font-family: var(--font-serif);
+      font-size: 3rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+
+    header .subtitle {
+      font-size: 1.1rem;
+      opacity: 0.8;
+      font-weight: 300;
+      max-width: 600px;
+      margin: 0 auto 1.5rem;
+    }
+
+    .podcast-meta {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+
+    .podcast-meta a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      opacity: 0.85;
+      transition: opacity 0.2s;
+      padding: 0.4rem 1rem;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 2rem;
+    }
+
+    .podcast-meta a:hover { opacity: 1; background: rgba(255,255,255,0.1); }
+
+    .about {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 3rem 1.5rem 2rem;
+    }
+
+    .about-content {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 2rem 2.5rem;
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+    }
+
+    .about-content img {
+      width: 160px;
+      height: 160px;
+      border-radius: 12px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .about-text h2 {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+      color: var(--color-accent);
+    }
+
+    .about-text p {
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+    }
+
+    .episodes {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 1rem 1.5rem 4rem;
+    }
+
+    .episodes h2 {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      color: var(--color-text);
+    }
+
+    .episode {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 1.5rem 2rem;
+      margin-bottom: 1rem;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+
+    .episode:hover {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+      border-color: var(--color-accent-light);
+    }
+
+    .episode-date {
+      font-size: 0.8rem;
+      color: var(--color-accent);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.3rem;
+    }
+
+    .episode h3 {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .episode h3 a {
+      color: var(--color-text);
+      text-decoration: none;
+    }
+
+    .episode h3 a:hover { color: var(--color-accent); }
+
+    .episode-description {
+      color: var(--color-text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .episode audio {
+      width: 100%;
+      height: 40px;
+      border-radius: 8px;
+    }
+
+    .episode-duration {
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+      margin-top: 0.5rem;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 3rem;
+      color: var(--color-text-muted);
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      border: 3px solid var(--color-border);
+      border-top-color: var(--color-accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-bottom: 1rem;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .error {
+      text-align: center;
+      padding: 2rem;
+      color: #c0392b;
+      background: #fdf2f2;
+      border-radius: 12px;
+      border: 1px solid #f5c6cb;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      border-top: 1px solid var(--color-border);
+      color: var(--color-text-muted);
+      font-size: 0.85rem;
+    }
+
+    footer a { color: var(--color-accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 640px) {
+      header h1 { font-size: 2.2rem; }
+      header { padding: 3rem 1rem 2rem; }
+      .about-content { flex-direction: column; align-items: center; text-align: center; padding: 1.5rem; }
+      .about-content img { width: 120px; height: 120px; }
+      .episode { padding: 1.2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>ECCLESIA</h1>
+    <p class="subtitle" id="podcast-subtitle">Podcast o vire, cirkvi a spolecnosti</p>
+    <div class="podcast-meta">
+      <a href="https://ecclesiapodcast.podbean.com/" target="_blank" rel="noopener">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        Podbean
+      </a>
+      <a href="https://ecclesiapodcast.cz/" target="_blank" rel="noopener">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+        Web
+      </a>
+      <a href="#episodes">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+        Epizody
+      </a>
+    </div>
+  </header>
+
+  <section class="about">
+    <div class="about-content">
+      <img id="podcast-cover" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' fill='%236b4c9a' viewBox='0 0 24 24'%3E%3Cpath d='M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z'/%3E%3C/svg%3E" alt="Ecclesia Podcast">
+      <div class="about-text">
+        <h2>O podcastu</h2>
+        <p id="podcast-description">Nacitam informace o podcastu...</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="episodes" id="episodes">
+    <h2>Epizody</h2>
+    <div id="episodes-list">
+      <div class="loading">
+        <div class="loading-spinner"></div>
+        <p>Nacitam epizody...</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>
+      <a href="https://ecclesiapodcast.podbean.com/" target="_blank" rel="noopener">Ecclesia Podcast</a>
+      &middot;
+      <a href="https://ecclesiapodcast.cz/" target="_blank" rel="noopener">ecclesiapodcast.cz</a>
+    </p>
+  </footer>
+
+  <script>
+    const FEED_URL = 'https://feed.podbean.com/ecclesiapodcast/feed.xml';
+    const CORS_PROXIES = [
+      (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+      (url) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+    ];
+
+    function formatDate(dateStr) {
+      try {
+        const date = new Date(dateStr);
+        return date.toLocaleDateString('cs-CZ', {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric'
+        });
+      } catch {
+        return dateStr;
+      }
+    }
+
+    function stripHtml(html) {
+      const tmp = document.createElement('div');
+      tmp.innerHTML = html;
+      return tmp.textContent || tmp.innerText || '';
+    }
+
+    function formatDuration(seconds) {
+      if (!seconds) return '';
+      const s = parseInt(seconds, 10);
+      const h = Math.floor(s / 3600);
+      const m = Math.floor((s % 3600) / 60);
+      if (h > 0) return `${h} hod ${m} min`;
+      return `${m} min`;
+    }
+
+    function parseDurationToSeconds(duration) {
+      if (!duration) return 0;
+      const parts = duration.split(':').map(Number);
+      if (parts.length === 3) return parts[0] * 3600 + parts[1] * 60 + parts[2];
+      if (parts.length === 2) return parts[0] * 60 + parts[1];
+      return parseInt(duration, 10) || 0;
+    }
+
+    async function fetchFeed() {
+      for (const proxy of CORS_PROXIES) {
+        try {
+          const res = await fetch(proxy(FEED_URL));
+          if (!res.ok) continue;
+          const text = await res.text();
+          if (text.includes('<rss') || text.includes('<channel')) return text;
+        } catch { /* try next proxy */ }
+      }
+      throw new Error('Nelze nacist RSS feed');
+    }
+
+    function parseFeed(xml) {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(xml, 'text/xml');
+      const channel = doc.querySelector('channel');
+
+      const podcast = {
+        title: channel.querySelector('title')?.textContent || 'Ecclesia Podcast',
+        description: channel.querySelector('description')?.textContent || '',
+        image: channel.querySelector('image url')?.textContent
+          || doc.querySelector('itunes\\:image, image')?.getAttribute('href')
+          || '',
+        author: doc.querySelector('itunes\\:author')?.textContent || '',
+        categories: [],
+      };
+
+      doc.querySelectorAll('itunes\\:category').forEach(cat => {
+        const name = cat.getAttribute('text');
+        if (name) podcast.categories.push(name);
+      });
+
+      const items = channel.querySelectorAll('item');
+      const episodes = [];
+
+      items.forEach(item => {
+        const enclosure = item.querySelector('enclosure');
+        const durationEl = item.querySelector('itunes\\:duration');
+        const durationRaw = durationEl?.textContent || '';
+        const durationSec = durationRaw.includes(':')
+          ? parseDurationToSeconds(durationRaw)
+          : parseInt(durationRaw, 10) || 0;
+
+        episodes.push({
+          title: item.querySelector('title')?.textContent || '',
+          description: item.querySelector('description')?.textContent || '',
+          pubDate: item.querySelector('pubDate')?.textContent || '',
+          audioUrl: enclosure?.getAttribute('url') || '',
+          audioType: enclosure?.getAttribute('type') || 'audio/mpeg',
+          link: item.querySelector('link')?.textContent || '',
+          duration: formatDuration(durationSec),
+        });
+      });
+
+      return { podcast, episodes };
+    }
+
+    function renderPodcast(podcast) {
+      if (podcast.image) {
+        document.getElementById('podcast-cover').src = podcast.image;
+      }
+
+      const desc = stripHtml(podcast.description);
+      if (desc) {
+        document.getElementById('podcast-description').textContent = desc;
+      }
+
+      if (podcast.author) {
+        document.getElementById('podcast-subtitle').textContent =
+          `${podcast.author} — podcast o vire, cirkvi a spolecnosti`;
+      }
+    }
+
+    function renderEpisodes(episodes) {
+      const container = document.getElementById('episodes-list');
+
+      if (episodes.length === 0) {
+        container.innerHTML = '<p class="loading">Zatim nejsou k dispozici zadne epizody.</p>';
+        return;
+      }
+
+      container.innerHTML = episodes.map(ep => `
+        <article class="episode">
+          <div class="episode-date">${formatDate(ep.pubDate)}</div>
+          <h3><a href="${ep.link}" target="_blank" rel="noopener">${ep.title}</a></h3>
+          <p class="episode-description">${stripHtml(ep.description)}</p>
+          ${ep.audioUrl ? `
+            <audio controls preload="none">
+              <source src="${ep.audioUrl}" type="${ep.audioType}">
+              Vas prohlizec nepodporuje prehravani audia.
+            </audio>
+          ` : ''}
+          ${ep.duration ? `<p class="episode-duration">${ep.duration}</p>` : ''}
+        </article>
+      `).join('');
+    }
+
+    function renderError(msg) {
+      document.getElementById('episodes-list').innerHTML = `
+        <div class="error">
+          <p><strong>Omlouváme se,</strong> nepodařilo se načíst epizody.</p>
+          <p style="margin-top:0.5rem;font-size:0.85rem;">
+            Poslouchejte přímo na
+            <a href="https://ecclesiapodcast.podbean.com/" target="_blank" rel="noopener">Podbean</a>.
+          </p>
+        </div>
+      `;
+      document.getElementById('podcast-description').textContent =
+        'Podcast Ecclesia přináší rozhovory a zamyšlení o víře, církvi a společnosti. ' +
+        'Nové epizody najdete na Podbean nebo ve vaší oblíbené podcastové aplikaci.';
+    }
+
+    async function init() {
+      try {
+        const xml = await fetchFeed();
+        const { podcast, episodes } = parseFeed(xml);
+        renderPodcast(podcast);
+        renderEpisodes(episodes);
+      } catch (err) {
+        console.error('Feed error:', err);
+        renderError(err.message);
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
