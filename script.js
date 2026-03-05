@@ -186,14 +186,19 @@ function renderPage() {
       pages.add(i);
     }
     const sorted = [...pages].sort((a, b) => a - b);
+    console.log('[pagination] currentPage:', currentPage, 'totalPages:', totalPages);
+    console.log('[pagination] pages set:', [...pages]);
+    console.log('[pagination] sorted:', sorted);
     let prev = 0;
     for (const p of sorted) {
       if (p - prev > 1) {
+        console.log('[pagination] ellipsis between', prev, 'and', p, '(gap:', p - prev, ')');
         buttons.push(`<span class="page-ellipsis">&hellip;</span>`);
       }
       buttons.push(`<button class="page-btn ${p === currentPage ? 'active' : ''}" data-page="${p}">${p}</button>`);
       prev = p;
     }
+    console.log('[pagination] total buttons:', buttons.length);
 
     buttons.push(`<button class="page-btn" ${currentPage === totalPages ? 'disabled' : ''} data-page="${currentPage + 1}">&raquo;</button>`);
     paginationHtml = `<nav class="pagination">${buttons.join('')}</nav>`;
