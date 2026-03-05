@@ -162,6 +162,16 @@ header .subtitle {
   border: 1px solid var(--color-border);
   border-radius: 12px;
   padding: 2rem 2.5rem;
+}
+
+.about-content h2 {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--color-accent);
+}
+
+.about-body {
   display: flex;
   gap: 2rem;
   align-items: center;
@@ -176,23 +186,10 @@ header .subtitle {
   text-align: left;
 }
 
-.about-text h2 {
-  font-family: var(--font-serif);
-  font-size: 1.5rem;
-  margin-bottom: 0.75rem;
-  color: var(--color-accent);
-}
-
 .about-text p {
   color: var(--color-text-muted);
   font-size: 0.95rem;
   margin-bottom: 0.6rem;
-}
-
-.about-columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
 }
 
 .about-text p:last-child { margin-bottom: 0; }
@@ -503,8 +500,11 @@ footer a:hover { text-decoration: underline; }
 
   .about-content {
     padding: 1.5rem;
-    flex-direction: column;
     text-align: center;
+  }
+
+  .about-body {
+    flex-direction: column;
   }
 
   .about-logo {
@@ -513,10 +513,6 @@ footer a:hover { text-decoration: underline; }
 
   .about-text {
     text-align: center;
-  }
-
-  .about-columns {
-    grid-template-columns: 1fr;
   }
 
   .support-content {
