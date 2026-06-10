@@ -106,7 +106,7 @@ header {
   min-height: 100vh;
   min-height: 100svh;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
 }
 
@@ -116,7 +116,7 @@ header {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 30%;
+  object-position: center 22%;
   z-index: 0;
   animation: hero-zoom 16s ease-out forwards;
 }
@@ -126,47 +126,36 @@ header {
   to   { transform: scale(1); }
 }
 
+/* Čistý spodní scrim: fotka (tváře) zůstává nahoře čitelná,
+   text sedí na ztmaveném spodku; brand nádech jen jemně v rozích */
 .hero-overlay {
   position: absolute;
   inset: 0;
   z-index: 1;
   background:
-    radial-gradient(ellipse 90% 70% at 12% 0%, rgba(46, 155, 214, 0.42), transparent 55%),
-    radial-gradient(ellipse 90% 70% at 90% 100%, rgba(224, 90, 43, 0.4), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 0% 0%, rgba(46, 155, 214, 0.18), transparent 60%),
+    radial-gradient(ellipse 70% 50% at 100% 100%, rgba(224, 90, 43, 0.16), transparent 60%),
     linear-gradient(
-      to bottom,
-      rgba(30, 42, 58, 0.72) 0%,
-      rgba(30, 42, 58, 0.45) 45%,
-      rgba(30, 42, 58, 0.85) 100%
+      to top,
+      rgba(30, 42, 58, 0.94) 0%,
+      rgba(30, 42, 58, 0.72) 22%,
+      rgba(30, 42, 58, 0.3) 55%,
+      rgba(30, 42, 58, 0.35) 100%
     );
 }
 
 .hero-content {
   position: relative;
   z-index: 2;
-  padding: 5rem 1.5rem 3rem;
+  padding: 7rem 1.5rem 3.5rem;
   width: 100%;
-  max-width: 760px;
-}
-
-.hero-badge {
-  display: inline-block;
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  padding: 0.45rem 1.3rem;
-  border-radius: 2rem;
-  margin-bottom: 1.6rem;
-  color: #fff;
-  background: linear-gradient(135deg, rgba(46, 155, 214, 0.9), rgba(29, 127, 181, 0.9));
-  box-shadow: 0 6px 20px rgba(46, 155, 214, 0.45);
+  max-width: 780px;
 }
 
 .header-logo {
-  height: 120px;
+  height: 84px;
   width: auto;
-  margin-bottom: 1.4rem;
+  margin-bottom: 1.1rem;
   filter: brightness(0) invert(1) drop-shadow(0 4px 18px rgba(0, 0, 0, 0.35));
 }
 
@@ -177,20 +166,26 @@ header h1 {
 
 header .subtitle {
   font-family: var(--font-display);
-  font-size: 1.7rem;
-  font-weight: 600;
-  line-height: 1.4;
-  max-width: 640px;
-  margin: 0 auto 1.5rem;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.35;
+  max-width: 680px;
+  margin: 0 auto 0.8rem;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55);
 }
 
 header .subtitle em {
   font-style: italic;
-  background: linear-gradient(90deg, var(--color-accent-light), #f0a87e);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--color-accent-light);
+}
+
+.hero-meta {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 1.7rem;
 }
 
 .hero-cta {
@@ -198,7 +193,6 @@ header .subtitle em {
   justify-content: center;
   gap: 1rem;
   flex-wrap: wrap;
-  margin-top: 2rem;
 }
 
 .hero-cta a {
@@ -238,16 +232,16 @@ header .subtitle em {
 .hero-socials {
   display: flex;
   justify-content: center;
-  gap: 0.9rem;
-  margin-top: 2.2rem;
+  gap: 0.8rem;
+  margin-top: 1.8rem;
 }
 
 .hero-socials a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.5);
@@ -262,26 +256,8 @@ header .subtitle em {
   transform: translateY(-3px);
 }
 
-.scroll-hint {
-  position: absolute;
-  bottom: 1.2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-  color: rgba(255, 255, 255, 0.9);
-  animation: bounce 2s infinite;
-}
-
-.scroll-hint:hover { color: #fff; }
-
-@keyframes bounce {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50%      { transform: translateX(-50%) translateY(8px); }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .hero-photo { animation: none; }
-  .scroll-hint { animation: none; }
   html { scroll-behavior: auto; }
 }
 
@@ -416,11 +392,7 @@ header .subtitle em {
 
 .about-content h2 {
   font-size: 1.7rem;
-  text-align: left;
-}
-
-.about-content h2::after {
-  margin-left: 0;
+  text-align: center;
 }
 
 .about-body {
@@ -792,6 +764,25 @@ header .subtitle em {
   margin-top: 0.4rem;
 }
 
+.spolek-info {
+  list-style: none;
+  font-size: 0.85rem;
+  opacity: 0.9;
+  margin-top: 0.2rem;
+}
+
+.spolek-info li { margin-bottom: 0.15rem; }
+
+.spolek-info span {
+  font-weight: 600;
+  opacity: 0.75;
+}
+
+.spolek-info a {
+  color: var(--color-accent-light);
+  text-decoration: underline;
+}
+
 .qr-box {
   display: flex;
   align-items: center;
@@ -911,10 +902,10 @@ footer a:hover { text-decoration: underline; }
 }
 
 @media (max-width: 640px) {
-  .header-logo { height: 76px; }
-  .hero-content { padding: 5rem 1rem 2rem; }
-  header .subtitle { font-size: 1.25rem; }
-  .hero-badge { font-size: 0.68rem; padding: 0.4rem 1rem; }
+  .header-logo { height: 62px; }
+  .hero-content { padding: 5rem 1rem 2.2rem; }
+  header .subtitle { font-size: 1.35rem; }
+  .hero-meta { font-size: 0.68rem; letter-spacing: 0.12em; }
 
   .section-inner h2 { font-size: 1.8rem; }
 
@@ -927,9 +918,6 @@ footer a:hover { text-decoration: underline; }
     padding: 1.8rem 1.5rem;
     text-align: center;
   }
-
-  .about-content h2 { text-align: center; }
-  .about-content h2::after { margin: 0.7rem auto 0; }
 
   .about-body {
     flex-direction: column;
