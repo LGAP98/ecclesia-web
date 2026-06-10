@@ -11,8 +11,8 @@ const SITE_CONFIG = {
   // i QR kód pro platbu (např. number: '123456789', bankCode: '2010').
   donationAccount: {
     prefix: '',
-    number: '',
-    bankCode: '',
+    number: '2403226142',
+    bankCode: '2010',
   },
   // Odkaz na přihlašovací formulář newsletteru (Ecomail, Mailchimp, …).
   newsletterUrl: '',
