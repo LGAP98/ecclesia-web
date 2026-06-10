@@ -1,30 +1,30 @@
 /* ========================================
    Ecclesia Podcast – style.css
+   Brand barvy: modrá #2e9bd6 / světlá #6bbde8 /
+   tmavá #4a6785 / oranžová #e05a2b / navy #1e2a3a
    ======================================== */
 
 :root {
-  --color-bg: #f5f8fc;
+  --color-bg: #f7f9fc;
   --color-surface: #ffffff;
-  --color-navy: #0d1b2e;
-  --color-navy-2: #14263d;
-  --color-text: #1c2940;
-  --color-text-muted: #5b6b80;
-  --color-accent: #1aa3e8;
-  --color-accent-deep: #0d7fc0;
+  --color-navy: #1e2a3a;
+  --color-navy-2: #2a3f55;
+  --color-navy-3: #34506a;
+  --color-text: #1e2a3a;
+  --color-text-muted: #556677;
+  --color-accent: #2e9bd6;
+  --color-accent-deep: #1d7fb5;
+  --color-accent-dark: #4a6785;
   --color-accent-light: #6bbde8;
-  --color-accent-warm: #ff6b35;
-  --color-warm-deep: #e8501c;
-  --color-gold: #ffb547;
-  --color-teal: #17b8a6;
-  --color-purple: #7c5cff;
-  --color-pink: #ec4d86;
+  --color-accent-warm: #e05a2b;
+  --color-warm-deep: #c9491f;
   --color-border: #dde4ec;
   --color-warm: #eef3f8;
   --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --max-width: 920px;
-  --shadow-card: 0 4px 18px rgba(13, 27, 46, 0.07);
-  --shadow-card-hover: 0 14px 34px rgba(13, 27, 46, 0.14);
+  --shadow-card: 0 4px 18px rgba(30, 42, 58, 0.07);
+  --shadow-card-hover: 0 14px 34px rgba(30, 42, 58, 0.14);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -53,7 +53,7 @@ body {
   justify-content: space-between;
   gap: 1rem;
   padding: 0.7rem 1.4rem;
-  background: linear-gradient(to bottom, rgba(13, 27, 46, 0.82), rgba(13, 27, 46, 0.55));
+  background: linear-gradient(to bottom, rgba(30, 42, 58, 0.85), rgba(30, 42, 58, 0.55));
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
@@ -86,14 +86,14 @@ body {
   opacity: 1;
   padding: 0.45rem 1.2rem;
   border-radius: 2rem;
-  background: linear-gradient(135deg, var(--color-accent-warm), var(--color-pink));
-  box-shadow: 0 4px 14px rgba(236, 77, 134, 0.4);
+  background: linear-gradient(135deg, var(--color-accent-warm), var(--color-warm-deep));
+  box-shadow: 0 4px 14px rgba(224, 90, 43, 0.45);
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .nav-links .nav-cta:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(236, 77, 134, 0.55);
+  box-shadow: 0 6px 18px rgba(224, 90, 43, 0.6);
 }
 
 /* ---- Hero ---- */
@@ -131,14 +131,13 @@ header {
   inset: 0;
   z-index: 1;
   background:
-    radial-gradient(ellipse 90% 70% at 15% 0%, rgba(26, 163, 232, 0.4), transparent 55%),
-    radial-gradient(ellipse 90% 70% at 90% 100%, rgba(255, 107, 53, 0.45), transparent 55%),
-    radial-gradient(ellipse 60% 50% at 80% 10%, rgba(124, 92, 255, 0.3), transparent 60%),
+    radial-gradient(ellipse 90% 70% at 12% 0%, rgba(46, 155, 214, 0.42), transparent 55%),
+    radial-gradient(ellipse 90% 70% at 90% 100%, rgba(224, 90, 43, 0.4), transparent 55%),
     linear-gradient(
       to bottom,
-      rgba(13, 27, 46, 0.72) 0%,
-      rgba(13, 27, 46, 0.45) 45%,
-      rgba(13, 27, 46, 0.85) 100%
+      rgba(30, 42, 58, 0.72) 0%,
+      rgba(30, 42, 58, 0.45) 45%,
+      rgba(30, 42, 58, 0.85) 100%
     );
 }
 
@@ -160,8 +159,8 @@ header {
   border-radius: 2rem;
   margin-bottom: 1.6rem;
   color: #fff;
-  background: linear-gradient(135deg, rgba(26, 163, 232, 0.85), rgba(124, 92, 255, 0.85));
-  box-shadow: 0 6px 20px rgba(26, 163, 232, 0.4);
+  background: linear-gradient(135deg, rgba(46, 155, 214, 0.9), rgba(29, 127, 181, 0.9));
+  box-shadow: 0 6px 20px rgba(46, 155, 214, 0.45);
 }
 
 .header-logo {
@@ -188,7 +187,7 @@ header .subtitle {
 
 header .subtitle em {
   font-style: italic;
-  background: linear-gradient(90deg, var(--color-gold), var(--color-accent-warm));
+  background: linear-gradient(90deg, var(--color-accent-light), #f0a87e);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -216,13 +215,13 @@ header .subtitle em {
 }
 
 .hero-cta .cta-button {
-  background: linear-gradient(135deg, var(--color-accent-warm), var(--color-pink));
-  box-shadow: 0 8px 26px rgba(255, 107, 53, 0.5);
+  background: linear-gradient(135deg, var(--color-accent-warm), var(--color-warm-deep));
+  box-shadow: 0 8px 26px rgba(224, 90, 43, 0.5);
 }
 
 .hero-cta .cta-button:hover {
   transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 12px 34px rgba(255, 107, 53, 0.65);
+  box-shadow: 0 12px 34px rgba(224, 90, 43, 0.65);
 }
 
 .hero-cta .cta-secondary {
@@ -258,7 +257,7 @@ header .subtitle em {
 }
 
 .hero-socials a:hover {
-  background: linear-gradient(135deg, var(--color-accent), var(--color-purple));
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-deep));
   border-color: transparent;
   transform: translateY(-3px);
 }
@@ -300,7 +299,7 @@ header .subtitle em {
   font-weight: 700;
   margin-bottom: 1.6rem;
   text-align: center;
-  background: linear-gradient(100deg, var(--color-accent-deep) 0%, var(--color-purple) 55%, var(--color-warm-deep) 100%);
+  background: linear-gradient(100deg, var(--color-accent-deep) 0%, var(--color-accent) 55%, var(--color-accent-warm) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -313,16 +312,16 @@ header .subtitle em {
   height: 5px;
   margin: 0.7rem auto 0;
   border-radius: 3px;
-  background: linear-gradient(90deg, var(--color-accent), var(--color-pink), var(--color-gold));
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-warm));
 }
 
 /* ---- Platforms / Odebirejte nas ---- */
 
 .platforms {
   background:
-    radial-gradient(700px 360px at 8% 0%, rgba(26, 163, 232, 0.14), transparent 70%),
-    radial-gradient(700px 360px at 95% 100%, rgba(255, 107, 53, 0.14), transparent 70%),
-    #fdfbf7;
+    radial-gradient(700px 360px at 8% 0%, rgba(46, 155, 214, 0.14), transparent 70%),
+    radial-gradient(700px 360px at 95% 100%, rgba(224, 90, 43, 0.13), transparent 70%),
+    #fdfaf6;
 }
 
 .platforms-intro {
@@ -366,6 +365,8 @@ header .subtitle em {
   opacity: 0.9;
 }
 
+/* Dlaždice platforem záměrně používají barvy daných platforem
+   (Spotify zelená, Apple fialová, YouTube červená, RSS oranžová) */
 .platform-spotify {
   background: linear-gradient(150deg, #1ed760, #128a3e);
   box-shadow: 0 10px 26px rgba(30, 215, 96, 0.35);
@@ -391,7 +392,7 @@ header .subtitle em {
 /* ---- About ---- */
 
 .about {
-  background: linear-gradient(180deg, #fdfbf7 0%, var(--color-bg) 30%);
+  background: linear-gradient(180deg, #fdfaf6 0%, var(--color-bg) 30%);
 }
 
 .about-content {
@@ -410,7 +411,7 @@ header .subtitle em {
   left: 0;
   right: 0;
   height: 6px;
-  background: linear-gradient(90deg, var(--color-accent), var(--color-purple), var(--color-pink), var(--color-gold));
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-light), var(--color-accent-warm));
 }
 
 .about-content h2 {
@@ -453,9 +454,9 @@ header .subtitle em {
 
 .hosts {
   background:
-    radial-gradient(700px 400px at 0% 20%, rgba(124, 92, 255, 0.12), transparent 70%),
-    radial-gradient(700px 400px at 100% 80%, rgba(23, 184, 166, 0.12), transparent 70%),
-    #f2f5fa;
+    radial-gradient(700px 400px at 0% 20%, rgba(46, 155, 214, 0.12), transparent 70%),
+    radial-gradient(700px 400px at 100% 80%, rgba(224, 90, 43, 0.1), transparent 70%),
+    #f1f5f9;
 }
 
 .hosts-intro {
@@ -499,10 +500,8 @@ header .subtitle em {
 }
 
 .host-card:nth-child(2n) img { border-color: var(--color-accent-warm); }
-.host-card:nth-child(3n) img { border-color: var(--color-teal); }
-.host-card:nth-child(4n) img { border-color: var(--color-gold); }
-.host-card:nth-child(5n) img { border-color: var(--color-purple); }
-.host-card:nth-child(7n) img { border-color: var(--color-pink); }
+.host-card:nth-child(3n) img { border-color: var(--color-accent-dark); }
+.host-card:nth-child(4n) img { border-color: var(--color-accent-light); }
 
 .host-card h3 {
   font-family: var(--font-display);
@@ -539,7 +538,7 @@ header .subtitle em {
   bottom: 0;
   left: 0;
   width: 5px;
-  background: linear-gradient(180deg, var(--color-accent), var(--color-purple));
+  background: linear-gradient(180deg, var(--color-accent), var(--color-accent-warm));
 }
 
 .episode:hover {
@@ -556,7 +555,7 @@ header .subtitle em {
   letter-spacing: 0.07em;
   padding: 0.15rem 0.8rem;
   border-radius: 1rem;
-  background: linear-gradient(135deg, var(--color-accent), var(--color-purple));
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-deep));
   margin-bottom: 0.55rem;
 }
 
@@ -626,10 +625,10 @@ header .subtitle em {
 }
 
 .page-btn.active {
-  background: linear-gradient(135deg, var(--color-accent), var(--color-purple));
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-deep));
   border-color: transparent;
   color: #fff;
-  box-shadow: 0 4px 12px rgba(26, 163, 232, 0.4);
+  box-shadow: 0 4px 12px rgba(46, 155, 214, 0.4);
 }
 
 .page-btn:disabled {
@@ -654,14 +653,14 @@ header .subtitle em {
 .newsletter-box {
   position: relative;
   background:
-    radial-gradient(500px 280px at 90% 0%, rgba(255, 181, 71, 0.35), transparent 65%),
-    radial-gradient(500px 280px at 0% 100%, rgba(236, 77, 134, 0.4), transparent 65%),
-    linear-gradient(135deg, var(--color-accent-deep) 0%, var(--color-purple) 100%);
+    radial-gradient(500px 280px at 90% 0%, rgba(224, 90, 43, 0.45), transparent 65%),
+    radial-gradient(500px 280px at 0% 100%, rgba(107, 189, 232, 0.35), transparent 65%),
+    linear-gradient(135deg, var(--color-accent-deep) 0%, var(--color-navy-2) 100%);
   color: #fff;
   border-radius: 24px;
   padding: 3rem 2rem;
   text-align: center;
-  box-shadow: 0 18px 44px rgba(124, 92, 255, 0.35);
+  box-shadow: 0 18px 44px rgba(29, 127, 181, 0.35);
 }
 
 .newsletter-box svg {
@@ -692,7 +691,7 @@ header .subtitle em {
 .newsletter-button {
   display: inline-block;
   background: #fff;
-  color: var(--color-purple);
+  color: var(--color-accent-deep);
   text-decoration: none;
   font-weight: 700;
   font-size: 1.05rem;
@@ -717,14 +716,14 @@ header .subtitle em {
 
 .support {
   background:
-    radial-gradient(800px 420px at 100% 0%, rgba(255, 107, 53, 0.25), transparent 65%),
-    radial-gradient(700px 400px at 0% 100%, rgba(26, 163, 232, 0.22), transparent 65%),
-    linear-gradient(135deg, var(--color-navy) 0%, var(--color-navy-2) 100%);
+    radial-gradient(800px 420px at 100% 0%, rgba(224, 90, 43, 0.28), transparent 65%),
+    radial-gradient(700px 400px at 0% 100%, rgba(46, 155, 214, 0.24), transparent 65%),
+    linear-gradient(135deg, var(--color-navy) 0%, var(--color-navy-2) 60%, var(--color-navy-3) 100%);
   color: #fff;
 }
 
 .support .section-inner h2 {
-  background: linear-gradient(100deg, #fff 0%, var(--color-gold) 100%);
+  background: linear-gradient(100deg, #fff 0%, var(--color-accent-light) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -742,14 +741,14 @@ header .subtitle em {
   margin-bottom: 1rem;
 }
 
-.support-text p strong { color: var(--color-gold); }
+.support-text p strong { color: var(--color-accent-light); }
 
 .support-text .support-highlight {
   font-family: var(--font-display);
   font-size: 1.3rem;
   font-style: italic;
   opacity: 1;
-  background: linear-gradient(90deg, var(--color-gold), var(--color-accent-warm));
+  background: linear-gradient(90deg, var(--color-accent-light), #f0a87e);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -774,7 +773,7 @@ header .subtitle em {
   font-family: var(--font-display);
   font-size: 1.05rem;
   margin-bottom: 0.35rem;
-  color: var(--color-gold);
+  color: var(--color-accent-light);
 }
 
 .support-option p {
@@ -837,7 +836,7 @@ header .subtitle em {
   height: 36px;
   border: 3px solid var(--color-border);
   border-top-color: var(--color-accent);
-  border-right-color: var(--color-pink);
+  border-right-color: var(--color-accent-warm);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
   margin-bottom: 1rem;
@@ -889,7 +888,7 @@ footer a:hover { text-decoration: underline; }
 }
 
 .footer-socials a:hover {
-  background: linear-gradient(135deg, var(--color-accent), var(--color-pink));
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-warm));
   transform: translateY(-2px);
   text-decoration: none;
 }
