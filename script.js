@@ -3,16 +3,53 @@
    RSS feed loader & renderer
    ======================================== */
 
-/* ---- Hero slideshow ---- */
-(function() {
-  const slides = document.querySelectorAll('.hero-slide');
-  if (slides.length <= 1) return;
-  let current = 0;
-  setInterval(() => {
-    slides[current].classList.remove('active');
-    current = (current + 1) % slides.length;
-    slides[current].classList.add('active');
-  }, 5000);
+/* ---- Konfigurace webu ----
+   Sem doplňte údaje, jakmile budou k dispozici –
+   web se podle nich aktualizuje automaticky. */
+const SITE_CONFIG = {
+  // Číslo účtu spolku pro dary. Po vyplnění se zobrazí číslo účtu
+  // i QR kód pro platbu (např. number: '123456789', bankCode: '2010').
+  donationAccount: {
+    prefix: '',
+    number: '',
+    bankCode: '',
+  },
+  // Odkaz na přihlašovací formulář newsletteru (Ecomail, Mailchimp, …).
+  newsletterUrl: '',
+};
+
+/* ---- Newsletter ---- */
+(function initNewsletter() {
+  const link = document.getElementById('newsletter-link');
+  const hint = document.getElementById('newsletter-hint');
+  if (!link || !SITE_CONFIG.newsletterUrl) return;
+  link.href = SITE_CONFIG.newsletterUrl;
+  link.target = '_blank';
+  link.rel = 'noopener';
+  if (hint) hint.remove();
+})();
+
+/* ---- QR kód pro dar (česká QR platba) ---- */
+(function initDonationQr() {
+  const { prefix, number, bankCode } = SITE_CONFIG.donationAccount;
+  if (!number || !bankCode) return;
+
+  const account = `${prefix ? prefix + '-' : ''}${number}/${bankCode}`;
+  const accountEl = document.getElementById('donation-account');
+  if (accountEl) accountEl.textContent = account;
+
+  const qrBox = document.getElementById('donation-qr');
+  if (qrBox) {
+    const params = new URLSearchParams({
+      accountNumber: number,
+      bankCode: bankCode,
+      message: 'ECCLESIA PODCAST',
+      size: '200',
+    });
+    if (prefix) params.set('accountPrefix', prefix);
+    const src = `https://api.paylibo.com/paylibo/generator/czech/image?${params}`;
+    qrBox.innerHTML = `<img src="${src}" alt="QR kód pro dar na účet ${account}" width="180" height="180">`;
+  }
 })();
 
 const FEED_URL = 'https://feed.podbean.com/ecclesiapodcast/feed.xml';
@@ -222,7 +259,8 @@ function renderError() {
   document.getElementById('episodes-list').innerHTML = `
     <div class="error">
       <p>Epizody se momentálně nepodařilo načíst. Mezitím nás můžete poslouchat přímo na
-        <a href="https://ecclesiapodcast.podbean.com/" target="_blank" rel="noopener">Podbean</a>.
+        <a href="https://open.spotify.com/show/2Znn5fGDS0gHYgS1RynksV" target="_blank" rel="noopener">Spotify</a>
+        nebo v <a href="https://podcasts.apple.com/cz/podcast/ecclesia-podcast-cz/id1535681775" target="_blank" rel="noopener">Apple Podcasts</a>.
       </p>
     </div>
   `;
