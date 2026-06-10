@@ -705,6 +705,14 @@ header .subtitle em {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
+  align-items: center;
+}
+
+.support-secondary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
 .support-text p {
@@ -932,6 +940,10 @@ footer a:hover { text-decoration: underline; }
   }
 
   .support-content {
+    grid-template-columns: 1fr;
+  }
+
+  .support-secondary {
     grid-template-columns: 1fr;
   }
 
