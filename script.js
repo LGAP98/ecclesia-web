@@ -11,8 +11,8 @@ const SITE_CONFIG = {
   // i QR kód pro platbu (např. number: '123456789', bankCode: '2010').
   donationAccount: {
     prefix: '',
-    number: '',
-    bankCode: '',
+    number: '2403226142',
+    bankCode: '2010',
   },
   // Odkaz na přihlašovací formulář newsletteru (Ecomail, Mailchimp, …).
   newsletterUrl: '',
@@ -53,9 +53,21 @@ const SITE_CONFIG = {
 })();
 
 const FEED_URL = 'https://feed.podbean.com/ecclesiapodcast/feed.xml';
-const CORS_PROXIES = [
-  (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-  (url) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+
+async function fetchText(url) {
+  const res = await fetch(url, { signal: AbortSignal.timeout(12000) });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.text();
+}
+
+/* Zdroje feedu v pořadí podle spolehlivosti: nejdřív přímé stažení
+   (Podbean posílá CORS hlavičky), pak veřejné CORS proxy jako záloha. */
+const FEED_FETCHERS = [
+  () => fetchText(FEED_URL),
+  () => fetchText(`https://corsproxy.io/?url=${encodeURIComponent(FEED_URL)}`),
+  () => fetchText(`https://api.allorigins.win/raw?url=${encodeURIComponent(FEED_URL)}`),
+  async () => JSON.parse(await fetchText(`https://api.allorigins.win/get?url=${encodeURIComponent(FEED_URL)}`)).contents,
+  () => fetchText(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(FEED_URL)}`),
 ];
 
 function formatDate(dateStr) {
@@ -117,16 +129,16 @@ async function fetchFeed() {
   const cached = getCachedFeed();
   if (cached) return cached;
 
-  for (const proxy of CORS_PROXIES) {
+  for (const fetcher of FEED_FETCHERS) {
     try {
-      const res = await fetch(proxy(FEED_URL));
-      if (!res.ok) continue;
-      const text = await res.text();
-      if (text.includes('<rss') || text.includes('<channel')) {
+      const text = await fetcher();
+      if (text && (text.includes('<rss') || text.includes('<channel'))) {
         setCachedFeed(text);
         return text;
       }
-    } catch { /* try next proxy */ }
+    } catch (err) {
+      console.warn('Zdroj feedu selhal, zkouším další:', err.message);
+    }
   }
   throw new Error('Nelze načíst RSS feed');
 }
