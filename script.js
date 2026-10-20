@@ -15,7 +15,7 @@ const SITE_CONFIG = {
     bankCode: '2010',
   },
   // Odkaz na přihlašovací formulář newsletteru (Ecomail, Mailchimp, …).
-  newsletterUrl: '',
+  newsletterUrl: 'http://eepurl.com/iuFKpc',
 };
 
 /* ---- Newsletter ---- */
